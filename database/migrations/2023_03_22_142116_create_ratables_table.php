@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ratables', function (Blueprint $table) {
-            $table->id();
+            $table->string('name')->primary();
+            $table->longText('discription');
             $table->timestamps();
         });
     }
