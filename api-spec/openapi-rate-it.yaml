@@ -434,8 +434,6 @@ components:
         avarageRating:
           type: number
           format: float
-        comments:
-          type: array
           items:
             $ref: '#/components/schemas/Rating'
     Rating:
@@ -445,8 +443,6 @@ components:
         - rating
       properties:
         user:
-          type: string
-        comment:
           type: string
         rating:
           type: number
