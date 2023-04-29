@@ -9,7 +9,7 @@ class Topic extends Model
 {
     use HasFactory;
 
-    public function topics()
+    public function ratables()
     {
         return $this->hasMany(Ratable::class);
     }
