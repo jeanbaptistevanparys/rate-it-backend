@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ratables', function (Blueprint $table) {
+        Schema::create('ratable_languages', function (Blueprint $table) {
             $table->id();
-            $table->string('topic_id');
-            $table->string('image');
+            $table->integer('ratable_id');
+            $table->string('language', 2);
+            $table->string('name');
+            $table->longText('discription');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ratables');
+        Schema::dropIfExists('ratable_languages');
     }
 };

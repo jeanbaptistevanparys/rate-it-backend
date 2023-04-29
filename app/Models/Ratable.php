@@ -11,6 +11,11 @@ class Ratable extends Model
 {
     use HasFactory;
 
+    public function topic(): BelongsTo
+    {
+        return $this->belongsTo(Topic::class, 'topic_id', 'name');
+    }
+
     public function ratings(): HasMany
     {
         return $this->hasMany(Rating::class);
@@ -19,5 +24,10 @@ class Ratable extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function ratableLanguage()
+    {
+        return $this->hasMany(RatableLanguage::class, "ratable_id", "id");
     }
 }
