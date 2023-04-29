@@ -13,9 +13,16 @@ return new class extends Migration
     {
         Schema::create('ratables', function (Blueprint $table) {
             $table->id();
+            $table->string('image');
+            $table->timestamps();
+        });
+
+        Schema::create('ratables_language', function (Blueprint $table) {
+            $table->id();
+            $table->integer('ratable_id');
+            $table->string('language');
             $table->string('name');
             $table->longText('discription');
-            $table->string('image');
             $table->timestamps();
         });
     }
