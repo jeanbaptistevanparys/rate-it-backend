@@ -25,7 +25,7 @@ class RatableLanguageFactory extends Factory
 
     public function dutch()
     {
-        return $this->state(function (array $attributes) {
+        return $this->state(function () {
             return [
                 'language' => 'nl',
             ];

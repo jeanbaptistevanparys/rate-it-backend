@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ratable_languages', function (Blueprint $table) {
             $table->id();
-            $table->integer('ratable_id');
+            $table->foreignId('ratable_id')->constrained();
             $table->string('language', 2);
             $table->string('name');
             $table->longText('discription');

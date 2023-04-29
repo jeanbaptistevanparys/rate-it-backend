@@ -18,12 +18,7 @@ class Ratable extends Model
 
     public function ratings(): HasMany
     {
-        return $this->hasMany(Rating::class);
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Rating::class, 'ratable_id', 'id');
     }
 
     public function ratableLanguage()

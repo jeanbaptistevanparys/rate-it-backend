@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->longText("score");
+            $table->foreignId('ratable_id')->constrained();
+            $table->longText('score');
             $table->timestamps();
         });
     }

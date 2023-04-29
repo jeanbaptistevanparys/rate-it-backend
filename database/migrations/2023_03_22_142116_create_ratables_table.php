@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ratables', function (Blueprint $table) {
             $table->id();
-            $table->string('topic_id');
+            $table->foreignId('topic_id')->constrained();
             $table->string('image');
             $table->timestamps();
         });
