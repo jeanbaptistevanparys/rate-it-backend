@@ -55,18 +55,18 @@ paths:
         '400':
           description: Invalid status value
   /topic/{topicName}: 
+    parameters:
+      - name: topicName
+        in: path
+        description: Name of the topic
+        required: true
+        schema:
+          type: string
     delete:
       summary: Delete a topic
       description: Delete a topic of the rating app
       tags: 
         - topic
-      parameters:
-        - name: topicName
-          in: path
-          description: Name of the topic
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: successful operation
@@ -77,18 +77,18 @@ paths:
         '400':
           description: Invalid status value
   /topic/{topicName}/ratable:
+    parameters:
+      - name: topicName
+        in: path
+        description: Name of the topic
+        required: true
+        schema:
+          type: string
     get:
       summary: Fetch all ratables
       description: Retreive all ratables of a topic
       tags: 
         - ratable
-      parameters:
-        - name: topicName
-          in: path
-          description: Name of the topic
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: successful operation
@@ -103,13 +103,6 @@ paths:
     post:
       summary: Create a ratable
       description: Create a ratable of a topic
-      parameters:
-        - name: topicName
-          in: path
-          description: Name of the topic
-          required: true
-          schema:
-            type: string
       tags: 
         - ratable
       requestBody:
@@ -128,25 +121,25 @@ paths:
                 $ref: '#/components/schemas/Ratable'
         '400':
           description: Invalid status value
-  /topic/{topicName}/ratable/{ratableName}:
+  /topic/{topicName}/ratable/{ratableId}:
+    parameters:
+      - name: topicName
+        in: path
+        description: Name of the topic
+        required: true
+        schema:
+          type: string
+      - name: ratableId
+        in: path
+        description: Name of the ratable
+        required: true
+        schema:
+          type: string
     get:
       summary: Fetch a ratable
       description: Retreive a ratable of a topic
       tags: 
         - ratable
-      parameters:
-        - name: topicName
-          in: path
-          description: Name of the topic
-          required: true
-          schema:
-            type: string
-        - name: ratableName
-          in: path
-          description: Name of the ratable
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: successful operation
@@ -161,19 +154,6 @@ paths:
       description: Update a ratable of a topic
       tags: 
         - ratable
-      parameters:
-        - name: topicName
-          in: path
-          description: Name of the topic
-          required: true
-          schema:
-            type: string
-        - name: ratableName
-          in: path
-          description: Name of the ratable
-          required: true
-          schema:
-            type: string
       requestBody:
         description: Ratable to update
         required: true
@@ -195,19 +175,6 @@ paths:
       description: Delete a ratable of a topic
       tags: 
         - ratable
-      parameters:
-        - name: topicName
-          in: path
-          description: Name of the topic
-          required: true
-          schema:
-            type: string
-        - name: ratableName
-          in: path
-          description: Name of the ratable
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: successful operation
@@ -217,25 +184,25 @@ paths:
                 $ref: '#/components/schemas/Ratable'
         '400':
           description: Invalid status value
-  /topic/{topicName}/ratable/{ratableName}/rating:
+  /topic/{topicName}/ratable/{ratableId}/rating:
+    parameters:
+      - name: topicName
+        in: path
+        description: Name of the topic
+        required: true
+        schema:
+          type: string
+      - name: ratableId
+        in: path
+        description: Name of ratable
+        required: true
+        schema:
+          type: string
     get:
       summary: Fetch all ratings
       description: Retreive all ratings of a ratable
       tags: 
         - rating
-      parameters:
-        - name: topicName
-          in: path
-          description: Name of the topic
-          required: true
-          schema:
-            type: string
-        - name: ratableName
-          in: path
-          description: Name of the ratable
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: successful operation
@@ -250,19 +217,6 @@ paths:
     post:
       summary: Create a rating
       description: Create a rating of a ratable
-      parameters:
-        - name: topicName
-          in: path
-          description: Name of the topic
-          required: true
-          schema:
-            type: string
-        - name: ratableName
-          in: path
-          description: Name of ratable
-          required: true
-          schema:
-            type: string
       tags: 
         - rating
       requestBody:
@@ -281,25 +235,31 @@ paths:
                 $ref: '#/components/schemas/Rating'
         '400':
           description: Invalid status value
-  /topic/{topicName}/ratable/{ratableName}/rating/{userName}:
+  /topic/{topicName}/ratable/{ratableId}/rating/{ratingId}:
+    parameters:
+      - name: topicName
+        in: path
+        description: Name of the topic
+        required: true
+        schema:
+          type: string
+      - name: ratableId
+        in: path
+        description: Name of the ratable
+        required: true
+        schema:
+          type: string
+      - name: ratingId
+        in: path
+        description: Id of the rating
+        required: true
+        schema:
+          type: string
     delete:
       summary: Delete a rating
       description: Delete a rating of a ratable
       tags: 
         - rating
-      parameters:
-        - name: topicName
-          in: path
-          description: Name of the topic
-          required: true
-          schema:
-            type: string
-        - name: ratableName
-          in: path
-          description: Name of the ratable
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: successful operation
@@ -355,18 +315,18 @@ paths:
         '400':
           description: Invalid status value
   /user/{userName}:
+    parameters:
+      - name: userName
+        in: path
+        description: Name of the user
+        required: true
+        schema:
+          type: string
     get:
       summary: Fetch a user
       description: Retreive a user of the rating app
       tags: 
         - user
-      parameters:
-        - name: userName
-          in: path
-          description: Name of the user
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: successful operation
@@ -379,13 +339,6 @@ paths:
     put:
       summary: Update a user
       description: Update a user of the rating app
-      parameters:
-        - name: userName
-          in: path
-          description: Name of the user
-          required: true
-          schema:
-            type: string
       tags: 
         - user
       requestBody:
@@ -409,13 +362,6 @@ paths:
       description: Delete a user of the rating app
       tags: 
         - user
-      parameters:
-        - name: userName
-          in: path
-          description: Name of the user
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: successful operation
@@ -430,24 +376,21 @@ components:
     Topic:
       type: object
       required:
-        - id
         - topicName
       properties:
-        id:
-          type: string
         topicName:
           type: string
     Ratable:
       type: object
       required:
         - id
-        - ratableName
+        - ratableId
         - description
         - image
       properties:
         id:
           type: string
-        ratableName:
+        ratableId:
           type: string
         description:
           type: string
@@ -467,10 +410,7 @@ components:
     User:
       type: object
       required:
-        - id
         - userName
       properties:
-        id:
-          type: string
         userName:
           type: string
