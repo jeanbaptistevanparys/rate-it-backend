@@ -12,6 +12,6 @@ class Topic extends Model
 
     public function ratables(): HasMany
     {
-        return $this->hasMany(Ratable::class, 'topic_id', 'name');
+        return $this->hasMany(Ratable::class, 'topic_name', 'name');
     }
 }
