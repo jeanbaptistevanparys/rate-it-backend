@@ -383,14 +383,14 @@ components:
     Ratable:
       type: object
       required:
-        - id
         - ratableId
+        - ratableName
         - description
         - image
       properties:
-        id:
-          type: string
         ratableId:
+          type: string
+        ratableName:
           type: string
         description:
           type: string
@@ -399,10 +399,10 @@ components:
     Rating:
       type: object
       required:
-        - id
+        - ratingId
         - score
       properties:
-        id:
+        ratingId:
           type: string
         score:
           type: number
