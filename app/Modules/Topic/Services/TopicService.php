@@ -36,8 +36,8 @@ class TopicService extends Service
         return $topic;
     }
 
-    public function delete($id)
+    public function delete($name)
     {
-        return $this->_model->destroy($id);
+        return $this->_model->destroy($name);
     }
 }

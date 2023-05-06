@@ -10,6 +10,8 @@ class Topic extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'name';
+
     public function ratables(): HasMany
     {
         return $this->hasMany(Ratable::class, 'topic_name', 'name');
