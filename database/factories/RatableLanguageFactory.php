@@ -19,7 +19,7 @@ class RatableLanguageFactory extends Factory
         return [
             'language' => 'en',
             'name' => fake()->word(),
-            'discription' => fake()->paragraph()
+            'description' => fake()->paragraph()
         ];
     }
 

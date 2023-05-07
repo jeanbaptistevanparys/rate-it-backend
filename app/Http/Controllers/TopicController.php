@@ -31,8 +31,14 @@ class TopicController extends Controller
         return $topic;
     }
 
-    public function delete($id)
+    public function remove($id)
     {
-        return $this->_service->delete($id);
+        $this->_service->remove($id);
+
+        if ($this->_service->hasErrors()) {
+            return ["errors" => $this->_service->getErrors()];
+        }
+
+        return ["message" => "Topic removed"];
     }
 }

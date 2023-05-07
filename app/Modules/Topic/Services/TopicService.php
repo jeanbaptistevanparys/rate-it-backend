@@ -29,15 +29,15 @@ class TopicService extends Service
             return;
         }
 
-        $topic = new Topic(); // no mass assignment with name being primary
+        $topic = new Topic();
         $topic->name = $data['name'];
         $topic->save();
 
         return $topic;
     }
 
-    public function delete($name)
+    public function remove($id)
     {
-        return $this->_model->destroy($name);
+        return $this->_model->destroy($id);
     }
 }

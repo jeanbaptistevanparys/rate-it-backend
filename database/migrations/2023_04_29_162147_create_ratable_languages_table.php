@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('topics', function (Blueprint $table) {
-            $table->string('name')->primary();
+        Schema::create('ratable_languages', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('ratable_id')->constrained();
+            $table->string('language', 2);
+            $table->string('name');
+            $table->longText('description');
             $table->timestamps();
         });
     }
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('topics');
+        Schema::dropIfExists('ratable_languages');
     }
 };

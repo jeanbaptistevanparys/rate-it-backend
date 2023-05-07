@@ -13,7 +13,7 @@ class Ratable extends Model
 
     public function topic(): BelongsTo
     {
-        return $this->belongsTo(Topic::class, 'topic_name', 'name');
+        return $this->belongsTo(Topic::class, 'topic_id', 'id');
     }
 
     public function ratings(): HasMany
