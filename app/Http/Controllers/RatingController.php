@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Modules\Rating\Services\RatingService;
+use Illuminate\Http\Request;
 
 class RatingController extends Controller
 {
@@ -18,9 +19,11 @@ class RatingController extends Controller
         return $this->_service->all($topicId, $ratableId);
     }
 
-    public function add($topicId, $ratableId)
+    public function add($topicId, $ratableId, Request $request)
     {
-        return $this->_service->add($topicId, $ratableId);
+        $data = $request->all();
+
+        return $this->_service->add($topicId, $ratableId, $data);
     }
 
     public function remove($topicId, $ratableId, $id)

@@ -17,10 +17,10 @@ class RatingService extends Service
         return $this->_model->where('ratable_id', $ratableId)->get();
     }
 
-    public function add($topicId, $ratableId) {
+    public function add($topicId, $ratableId, $data) {
         $rating = new Rating();
-        $rating->topic_id = $topicId;
         $rating->ratable_id = $ratableId;
+        $rating->score = $data['score'];
         $rating->save();
 
         return $rating;
