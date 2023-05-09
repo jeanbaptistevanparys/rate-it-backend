@@ -18,6 +18,8 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->userName(),
+            'email' => fake()->unique()->safeEmail(),
+            'password' => fake()->password(),
         ];
     }
 }
