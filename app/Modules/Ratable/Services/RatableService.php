@@ -4,6 +4,7 @@ namespace App\Modules\Ratable\Services;
 
 use App\Models\Ratable;
 use App\Models\RatableLanguage;
+use App\Models\Topic;
 use App\Modules\Core\Services\Service;
 
 class RatableService extends Service
@@ -50,6 +51,13 @@ class RatableService extends Service
             return;
         }
 
+        $userId = auth()->user()->id;
+        $topic = Topic::find($topicId);
+        if ($topic->user_id !== $userId) {
+            $this->addError('topic', 'You are not allowed to add a ratable to this topic');
+            return;
+        }
+
         $ratable = new Ratable();
         $ratable->topic_id = $topicId;
         $ratable->image = $data['image'];
@@ -93,6 +101,13 @@ class RatableService extends Service
             return;
         }
 
+        $userId = auth()->user()->id;
+        $topic = Topic::find($topicId);
+        if ($topic->user_id !== $userId) {
+            $this->addError('topic', 'You are not allowed to update a ratable to this topic');
+            return;
+        }
+
         $ratable = $this->_model
             ->where("topic_id", $topicId)
             ->where("id", $id)
@@ -114,6 +129,13 @@ class RatableService extends Service
 
     public function remove($topicId, $id)
     {
+        $userId = auth()->user()->id;
+        $topic = Topic::find($topicId);
+        if ($topic->user_id !== $userId) {
+            $this->addError('topic', 'You are not allowed to delete a ratable to this topic');
+            return;
+        }
+
         $model = $this->_model
             ->where("topic_id", $topicId)
             ->where("id", $id)
