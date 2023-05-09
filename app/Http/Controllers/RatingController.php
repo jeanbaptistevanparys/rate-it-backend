@@ -28,6 +28,12 @@ class RatingController extends Controller
 
     public function remove($topicId, $ratableId, $id)
     {
-        return $this->_service->remove($topicId, $ratableId, $id);
+        $this->_service->remove($topicId, $ratableId, $id);
+
+        if ($this->_service->hasErrors()) {
+            return ["errors" => $this->_service->getErrors()];
+        }
+
+        return ["message" => "Rating removed"];
     }
 }
