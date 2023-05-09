@@ -28,6 +28,10 @@ abstract class Service
         }
     }
 
+    protected function addError($key, $value){
+        $this->_errors->add($key, $value);
+    }
+
     public function hasErrors(){
         return $this->_errors->any();
     }

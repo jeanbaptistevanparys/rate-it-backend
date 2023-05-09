@@ -41,7 +41,7 @@ class AuthController extends Controller
                 'errors' => $this->_service->getErrors()], 401);
         }
 
-        if (is_null($token)) {
+        if (is_null($token) || $token == "") {
             return response([
                 'status' => 401,
                 'message' => 'Credentials are invalid',

@@ -29,8 +29,11 @@ class TopicService extends Service
             return;
         }
 
+        $userId = auth()->user()->id;
+
         $topic = new Topic();
         $topic->name = $data['name'];
+        $topic->user_id = $userId;
         $topic->save();
 
         return $topic;
@@ -38,6 +41,14 @@ class TopicService extends Service
 
     public function remove($id)
     {
+        $user = auth()->user();
+        $topic = $this->_model->find($id);
+
+        if ($topic->user_id !== $user->id) {
+            $this->addError('topic', 'You are not allowed to delete this topic');
+            return;
+        }
+
         return $this->_model->destroy($id);
     }
 }
