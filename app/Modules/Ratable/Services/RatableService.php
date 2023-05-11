@@ -31,15 +31,28 @@ class RatableService extends Service
                 ->with(["ratableLanguage" => function ($query) use ($language) {
                     $query->where("language", $language);
                 }])
+                ->withCount('ratings')
                 ->paginate($pages)
                 ->withQueryString();
         } else {
             $data = $this->_model
                 ->where("topic_id", $topicId)
                 ->with("ratableLanguage")
+                ->withCount('ratings')
                 ->paginate($pages)
                 ->withQueryString();
         }
+
+        $data->getCollection()->transform(function ($item) {
+            $ratingCount = $item->ratings_count;
+            $totalScore = $item->ratings->sum('score');
+            $averageScore = $ratingCount > 0 ? $totalScore / $ratingCount : 0;
+    
+            $item['average_score'] = $averageScore;
+    
+            return $item;
+        });
+    
 
         return $data;
     }
