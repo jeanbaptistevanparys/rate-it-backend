@@ -31,20 +31,18 @@ class RatableService extends Service
                 ->with(["ratableLanguage" => function ($query) use ($language) {
                     $query->where("language", $language);
                 }])
-                ->withCount('ratings')
                 ->paginate($pages)
                 ->withQueryString();
         } else {
             $data = $this->_model
                 ->where("topic_id", $topicId)
                 ->with("ratableLanguage")
-                ->withCount('ratings')
                 ->paginate($pages)
                 ->withQueryString();
         }
 
         $data->getCollection()->transform(function ($item) {
-            $ratingCount = $item->ratings_count;
+            $ratingCount = $item->ratings->count();
             $totalScore = $item->ratings->sum('score');
             $averageScore = $ratingCount > 0 ? $totalScore / $ratingCount : 0;
     
@@ -96,17 +94,15 @@ class RatableService extends Service
                 ->with(["ratableLanguage" => function ($query) use ($language) {
                     $query->where("language", $language);
                 }])
-                ->withCount("ratings")
                 ->find($id);
         } else {
             $data = $this->_model
                 ->where("topic_id", $topicId)
                 ->with("ratableLanguage")
-                ->withCount("ratings")
                 ->find($id);
         }
 
-        $data->average_score = $data->ratings_count > 0 ? $data->ratings->sum('score') / $data->ratings_count : 0;
+         $data->average_score = $data->ratings->count() > 0 ? $data->ratings->sum('score') / $data->ratings->count() : 0;
 
 
         return $data;
