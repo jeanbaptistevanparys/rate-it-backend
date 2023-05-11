@@ -47,7 +47,10 @@ class RatableService extends Service
             $averageScore = $ratingCount > 0 ? $totalScore / $ratingCount : 0;
     
             $item['average_score'] = $averageScore;
+
     
+            unset($item->ratings);
+
             return $item;
         });
 
@@ -104,6 +107,7 @@ class RatableService extends Service
 
          $data->average_score = $data->ratings->count() > 0 ? $data->ratings->sum('score') / $data->ratings->count() : 0;
 
+         unset($data->ratings);
 
         return $data;
     }
