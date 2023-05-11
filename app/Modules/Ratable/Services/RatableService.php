@@ -41,6 +41,20 @@ class RatableService extends Service
                 ->withQueryString();
         }
 
+        $data->getCollection()->transform(function ($item) {
+            $ratingCount = $item->ratings->count();
+            $totalScore = $item->ratings->sum('score');
+            $averageScore = $ratingCount > 0 ? $totalScore / $ratingCount : 0;
+    
+            $item['average_score'] = $averageScore;
+
+    
+            unset($item->ratings);
+
+            return $item;
+        });
+
+
         return $data;
     }
 
@@ -91,6 +105,10 @@ class RatableService extends Service
                 ->find($id);
         }
 
+         $data->average_score = $data->ratings->count() > 0 ? $data->ratings->sum('score') / $data->ratings->count() : 0;
+
+         unset($data->ratings);
+
         return $data;
     }
 
@@ -118,7 +136,7 @@ class RatableService extends Service
 
         foreach ($data['translations'] as $language) {
             $ratableLanguage = $ratable->ratableLanguage()->where('language', $language['language'])->first();
-                
+
             $ratableLanguage->name = $language['name'];
             $ratableLanguage->description = $language['description'];
             $ratableLanguage->save();
@@ -140,9 +158,10 @@ class RatableService extends Service
             ->where("topic_id", $topicId)
             ->where("id", $id)
             ->first();
-        
+
         $model->ratableLanguage()->delete();
 
         return $model->delete();
     }
+
 }
