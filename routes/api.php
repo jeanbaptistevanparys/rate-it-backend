@@ -20,7 +20,6 @@ Route::middleware('auth:api')->group(function() {
     Route::put('/topic/{topicId}/ratable/{id}', [RatableController::class, 'update']);
     Route::delete('/topic/{topicId}/ratable/{id}', [RatableController::class, 'remove']);
 
-    Route::get('/topic/{topicId}/ratable/{ratableId}/rating', [RatingController::class, 'find']);
     Route::post('/topic/{topicId}/ratable/{ratableId}/rating/', [RatingController::class, 'add']);
     Route::delete('/topic/{topicId}/ratable/{ratableId}/rating/{id}', [RatingController::class, 'remove']);
 });
