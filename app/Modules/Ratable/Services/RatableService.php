@@ -47,7 +47,8 @@ class RatableService extends Service
             $averageScore = $ratingCount > 0 ? $totalScore / $ratingCount : 0;
     
             $item['average_score'] = $averageScore;
-
+            $user = auth()->user()->id;
+            $item['user_rating'] = $item->ratings->where('user_id', $user)->first();
     
             unset($item->ratings);
 
