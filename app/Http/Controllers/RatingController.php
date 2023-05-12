@@ -14,11 +14,6 @@ class RatingController extends Controller
         $this->_service = $ratingService;
     }
 
-    public function find($topicId, $ratableId)
-    {
-        return $this->_service->find($topicId, $ratableId);
-    }
-
     public function add($topicId, $ratableId, Request $request)
     {
         $data = $request->all();

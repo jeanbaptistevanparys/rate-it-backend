@@ -54,9 +54,9 @@ paths:
                 $ref: '#/components/schemas/Topic'
         '400':
           description: Invalid status value
-  /topic/{topicName}: 
+  /topic/{topicId}: 
     parameters:
-      - name: topicName
+      - name: topicId
         in: path
         description: Name of the topic
         required: true
@@ -76,9 +76,9 @@ paths:
                 $ref: '#/components/schemas/Topic'
         '400':
           description: Invalid status value
-  /topic/{topicName}/ratable:
+  /topic/{topicId}/ratable:
     parameters:
-      - name: topicName
+      - name: topicId
         in: path
         description: Name of the topic
         required: true
@@ -121,9 +121,9 @@ paths:
                 $ref: '#/components/schemas/Ratable'
         '400':
           description: Invalid status value
-  /topic/{topicName}/ratable/{ratableId}:
+  /topic/{topicId}/ratable/{ratableId}:
     parameters:
-      - name: topicName
+      - name: topicId
         in: path
         description: Name of the topic
         required: true
@@ -184,9 +184,9 @@ paths:
                 $ref: '#/components/schemas/Ratable'
         '400':
           description: Invalid status value
-  /topic/{topicName}/ratable/{ratableId}/rating:
+  /topic/{topicId}/ratable/{ratableId}/rating:
     parameters:
-      - name: topicName
+      - name: topicId
         in: path
         description: Name of the topic
         required: true
@@ -198,22 +198,6 @@ paths:
         required: true
         schema:
           type: string
-    get:
-      summary: Fetch all ratings
-      description: Retreive all ratings of a ratable
-      tags: 
-        - rating
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Rating'
-        '400':
-          description: Invalid status value
     post:
       summary: Create a rating
       description: Create a rating of a ratable
@@ -235,9 +219,9 @@ paths:
                 $ref: '#/components/schemas/Rating'
         '400':
           description: Invalid status value
-  /topic/{topicName}/ratable/{ratableId}/rating/{ratingId}:
+  /topic/{topicId}/ratable/{ratableId}/rating/{ratingId}:
     parameters:
-      - name: topicName
+      - name: topicId
         in: path
         description: Name of the topic
         required: true
@@ -269,106 +253,77 @@ paths:
                 $ref: '#/components/schemas/Rating'
         '400':
           description: Invalid status value
-  /user:
-    get:
-      summary: Fetch all users
-      description: Retreive all users of rating app
-      tags: 
-        - user
-      parameters:
-        - name: filter
-          in: query
-          description: Filter on name
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-        '400':
-          description: Invalid status value
+  /register:
     post:
-      summary: Create a user
-      description: Create a user of the rating app
+      summary: Register
+      description: Register
       tags: 
         - user
       requestBody:
-        description: User to create
+        description: User to register
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                required:
+                  - token
+                properties:
+                  token:
+                    type: string
         '400':
           description: Invalid status value
-  /user/{userName}:
-    parameters:
-      - name: userName
-        in: path
-        description: Name of the user
-        required: true
-        schema:
-          type: string
-    get:
-      summary: Fetch a user
-      description: Retreive a user of the rating app
-      tags: 
-        - user
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '400':
-          description: Invalid status value
-    put:
-      summary: Update a user
-      description: Update a user of the rating app
+  /login:
+    post:
+      summary: Login
+      description: Login
       tags: 
         - user
       requestBody:
-        description: User to update
+        description: User to login
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '400':
-          description: Invalid status value
-    delete:
-      summary: Delete a user
-      description: Delete a user of the rating app
-      tags: 
-        - user
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                required:
+                  - token
+                properties:
+                  token:
+                    type: string
         '400':
           description: Invalid status value
 components:
@@ -376,9 +331,9 @@ components:
     Topic:
       type: object
       required:
-        - topicName
+        - topicId
       properties:
-        topicName:
+        topicId:
           type: string
     Ratable:
       type: object
@@ -407,10 +362,3 @@ components:
         score:
           type: number
           format: float
-    User:
-      type: object
-      required:
-        - userName
-      properties:
-        userName:
-          type: string

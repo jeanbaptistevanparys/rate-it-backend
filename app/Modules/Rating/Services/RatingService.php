@@ -14,14 +14,6 @@ class RatingService extends Service
         parent::__construct($model);
     }
 
-    public function find($topicId, $ratableId) {
-        $user = auth()->user();
-
-        $rating = $this->_model->where('ratable_id', $ratableId)->where('user_id', $user->id)->first();
-
-        return $rating;
-    }
-
     public function add($topicId, $ratableId, $data)
     {
         $userId = auth()->user()->id;
