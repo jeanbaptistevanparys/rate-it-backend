@@ -19,7 +19,9 @@ class TopicService extends Service
 
     public function all()
     {
-        return $this->_model->all();
+        return $this->_model
+        ->withCount('ratables')
+        ->get();
     }
 
     public function add($data)
