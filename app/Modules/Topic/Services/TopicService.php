@@ -28,6 +28,17 @@ class TopicService extends Service
         return $data;
     }
 
+    public function hot($limit = 6)
+    {
+        $data = $this->_model
+            ->withCount('ratables')
+            ->orderBy('ratables_count', 'desc')
+            ->limit($limit)
+            ->get();
+
+        return $data;
+    }
+
     public function add($data)
     {
         $this->validate($data);

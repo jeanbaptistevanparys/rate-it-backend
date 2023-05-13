@@ -10,6 +10,7 @@ Route::post('register', [AuthController::class, "register"]);
 Route::post('login', [AuthController::class, "login"]);
 
 Route::get('/topic', [TopicController::class, 'all']);
+Route::get('/topic/hot', [TopicController::class, 'hot']);
 
 Route::get('/topic/{topicId}/ratable', [RatableController::class, 'all']);
 
