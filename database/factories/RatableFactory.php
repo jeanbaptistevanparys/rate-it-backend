@@ -17,7 +17,7 @@ class RatableFactory extends Factory
     public function definition(): array
     {
         return [
-            'image' => fake()->image(),
+            'image' => 'https://cdn.britannica.com/19/101219-050-A07A26EF/Barack-Obama.jpg',
         ];
     }
 }
