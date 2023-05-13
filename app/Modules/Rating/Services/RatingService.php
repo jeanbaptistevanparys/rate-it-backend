@@ -6,7 +6,7 @@ use App\Models\Ratable;
 use App\Models\Rating;
 use App\Modules\Core\Services\Service;
 
-class RatingService extends Service 
+class RatingService extends Service
 {
 
     public function __construct(Rating $model)
@@ -16,6 +16,10 @@ class RatingService extends Service
 
     public function add($topicId, $ratableId, $data)
     {
+        if ($data['score'] < 0 || $data['score'] > 10) {
+            $this->addError('score', 'Score must be between 0 and 10');
+            return;
+        }
         $userId = auth()->user()->id;
 
         $rating = new Rating();
