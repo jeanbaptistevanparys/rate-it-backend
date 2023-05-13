@@ -9,6 +9,10 @@ use App\Modules\Core\Services\Service;
 class RatingService extends Service
 {
 
+    protected $_rules = [
+        'score' => 'required|numeric|min:0|max:10',
+    ];
+
     public function __construct(Rating $model)
     {
         parent::__construct($model);
@@ -16,10 +20,11 @@ class RatingService extends Service
 
     public function add($topicId, $ratableId, $data)
     {
-        if ($data['score'] < 0 || $data['score'] > 10) {
-            $this->addError('score', 'Score must be between 0 and 10');
+        $this->validate($data);
+        if ($this->hasErrors()) {
             return;
         }
+
         $userId = auth()->user()->id;
 
         $rating = new Rating();
