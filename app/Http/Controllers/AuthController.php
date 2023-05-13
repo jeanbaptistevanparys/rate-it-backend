@@ -48,10 +48,12 @@ class AuthController extends Controller
                 'errors' => []], 401);
         }
 
+        $userId = auth()->user()->id;
 
         return response([
             "status" => "success",
-            "token" => $token
+            "token" => $token,
+            "userId" => $userId
         ], 200);
     }
     
