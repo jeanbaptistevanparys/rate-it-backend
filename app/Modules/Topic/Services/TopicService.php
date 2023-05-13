@@ -17,9 +17,14 @@ class TopicService extends Service
         parent::__construct($model);
     }
 
-    public function all()
+    public function all($filter = '', $limit = 6)
     {
-        return $this->_model->all();
+        $data = $this->_model
+            ->where('name', 'like', "%$filter%")
+            ->limit($limit)
+            ->get();
+
+        return $data;
     }
 
     public function add($data)

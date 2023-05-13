@@ -14,9 +14,11 @@ class TopicController extends Controller
         $this->_service = $service;
     }
 
-    public function all()
+    public function all(Request $request)
     {
-        return $this->_service->all();
+        $limit = $request->get('limit', 6);
+        $filter = $request->get('filter', '');
+        return $this->_service->all($filter, $limit);
     }
 
     public function add(Request $request)
