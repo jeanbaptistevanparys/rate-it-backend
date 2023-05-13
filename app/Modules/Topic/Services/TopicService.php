@@ -22,6 +22,7 @@ class TopicService extends Service
         $data = $this->_model
             ->where('name', 'like', "%$filter%")
             ->limit($limit)
+            ->withCount('ratables')
             ->get();
 
         return $data;
