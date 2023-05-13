@@ -4,6 +4,7 @@ namespace App\Modules\Topic\Services;
 
 use App\Models\Topic;
 use App\Modules\Core\Services\Service;
+use Illuminate\Support\Facades\DB;
 
 class TopicService extends Service
 {
@@ -31,8 +32,11 @@ class TopicService extends Service
     public function hot($limit = 6)
     {
         $data = $this->_model
-            ->withCount('ratables')
-            ->orderBy('ratables_count', 'desc')
+            ->select('topics.*')
+            ->join('ratables', 'topics.id', '=', 'ratables.topic_id')
+            ->leftJoin('ratings', 'ratables.id', '=', 'ratings.ratable_id')
+            ->groupBy('topics.id')
+            ->orderByRaw('COUNT(ratings.id) DESC')
             ->limit($limit)
             ->get();
 

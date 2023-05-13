@@ -17,7 +17,7 @@ class RatableFactory extends Factory
     public function definition(): array
     {
         return [
-            'image' => 'https://cdn.britannica.com/19/101219-050-A07A26EF/Barack-Obama.jpg',
+            'image' => 'https://upload.wikimedia.org/wikipedia/en/5/51/Kendrick_Lamar_-_Damn.png',
         ];
     }
 }
