@@ -23,11 +23,18 @@ class RatableService extends Service
         parent::__construct($model);
     }
 
-    public function all($topicId, $pages = 10, $language = null)
+    public function all($topicId, $pages = 10, $language = null, $filter = '')
     {
         if ($language) {
             $data = $this->_model
                 ->where("topic_id", $topicId)
+                ->whereHas("ratableLanguage", function ($query) use ($language, $filter) {
+                    $query->where("language", $language)
+                        ->where(function ($query) use ($filter) {
+                            $query->where("name", "like", "%$filter%")
+                                ->orWhere("description", "like", "%$filter%");
+                        });
+                })
                 ->with(["ratableLanguage" => function ($query) use ($language) {
                     $query->where("language", $language);
                 }])
@@ -36,6 +43,10 @@ class RatableService extends Service
         } else {
             $data = $this->_model
                 ->where("topic_id", $topicId)
+                ->whereHas("ratableLanguage", function ($query) use ($filter) {
+                    $query->where("name", "like", "%$filter%")
+                        ->orWhere("description", "like", "%$filter%");
+                })
                 ->with("ratableLanguage")
                 ->paginate($pages)
                 ->withQueryString();
@@ -47,8 +58,12 @@ class RatableService extends Service
             $averageScore = $ratingCount > 0 ? $totalScore / $ratingCount : 0;
     
             $item['average_score'] = $averageScore;
-            $user = auth()->user()->id;
-            $item['user_rating'] = $item->ratings->where('user_id', $user)->first();
+            $user = auth()->user();
+            if ($user) {
+                $item['user_rating'] = $item->ratings->where('user_id', $user->id)->first();
+            } else {
+                $item['user_rating'] = null;
+            }
     
             unset($item->ratings);
 
