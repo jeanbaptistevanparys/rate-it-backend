@@ -18,7 +18,7 @@ class RatableController extends Controller
     {
         $filter = $request->get("filter", '');
         $pages = $request->get("pages", 10);
-        $language = $request->get("language", null);
+        $language = $request->get("language", 'en');
 
         return $this->_service->all($topicId, $pages, $language, $filter);
     }

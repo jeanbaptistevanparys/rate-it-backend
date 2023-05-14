@@ -23,9 +23,22 @@ class RatableService extends Service
         parent::__construct($model);
     }
 
-    public function all($topicId, $pages = 10, $language = null, $filter = '')
+    public function all($topicId, $pages = 10, $language = 'en', $filter = '')
     {
-        if ($language) {
+        $user = auth()->user();
+        $topic_user = Topic::find($topicId)->user_id;
+        $isOwner = $user && $user->id == $topic_user;
+        if ($isOwner) {
+            $data = $this->_model
+                ->where("topic_id", $topicId)
+                ->whereHas("ratableLanguage", function ($query) use ($filter) {
+                    $query->where("name", "like", "%$filter%")
+                        ->orWhere("description", "like", "%$filter%");
+                })
+                ->with("ratableLanguage")
+                ->paginate($pages)
+                ->withQueryString();
+        } else {
             $data = $this->_model
                 ->where("topic_id", $topicId)
                 ->whereHas("ratableLanguage", function ($query) use ($language, $filter) {
@@ -38,16 +51,6 @@ class RatableService extends Service
                 ->with(["ratableLanguage" => function ($query) use ($language) {
                     $query->where("language", $language);
                 }])
-                ->paginate($pages)
-                ->withQueryString();
-        } else {
-            $data = $this->_model
-                ->where("topic_id", $topicId)
-                ->whereHas("ratableLanguage", function ($query) use ($filter) {
-                    $query->where("name", "like", "%$filter%")
-                        ->orWhere("description", "like", "%$filter%");
-                })
-                ->with("ratableLanguage")
                 ->paginate($pages)
                 ->withQueryString();
         }
@@ -70,8 +73,7 @@ class RatableService extends Service
             return $item;
         });
 
-
-        return $data;
+        return [ "ratables" => $data, "is_owner" => $isOwner];
     }
 
     public function add($topicId, $data)
