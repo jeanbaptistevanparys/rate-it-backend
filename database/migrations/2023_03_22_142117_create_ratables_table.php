@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ratables', function (Blueprint $table) {
             $table->id();
             $table->string('topic_id');
-            $table->string('image');
+            $table->binary('image');
             $table->timestamps();
         });
     }

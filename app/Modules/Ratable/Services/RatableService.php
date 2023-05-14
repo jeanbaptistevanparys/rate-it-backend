@@ -11,7 +11,7 @@ class RatableService extends Service
 {
 
     protected $_rules = [
-        "image" => "required|string",
+        "image" => "required",
         'translations' => 'required|array',
         'translations.*.language' => 'required|alpha|min:2|max:2',
         'translations.*.name' => 'required|string',
