@@ -23,7 +23,7 @@ class RatableService extends Service
         parent::__construct($model);
     }
 
-    public function all($topicId, $pages = 10, $language = 'en', $filter = '')
+    public function all($topicId, $pages = 6, $language = 'en', $filter = '')
     {
         $user = auth()->user();
         $topic_user = Topic::find($topicId)->user_id;
