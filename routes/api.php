@@ -6,9 +6,6 @@ use App\Http\Controllers\RatableController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\AuthController;
 
-Route::post('register', [AuthController::class, "register"]);
-Route::post('login', [AuthController::class, "login"]);
-
 Route::get('/topic', [TopicController::class, 'all']);
 Route::get('/topic/hot', [TopicController::class, 'hot']);
 
@@ -26,3 +23,10 @@ Route::middleware('auth:api')->group(function() {
     Route::post('/topic/{topicId}/ratable/{ratableId}/rating/', [RatingController::class, 'add']);
     Route::delete('/topic/{topicId}/ratable/{ratableId}/rating/{id}', [RatingController::class, 'remove']);
 });
+
+Route::fallback(function () {
+    return response()->json(['error' => 'Unauthenticated. Please provide a valid token.'], 401);
+});
+
+Route::post('register', [AuthController::class, "register"]);
+Route::post('login', [AuthController::class, "login"])->name('login');
